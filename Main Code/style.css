@@ -1,0 +1,42 @@
+canvas{
+    border: 5px solid blue;
+    margin: auto;
+    padding-left: 0;
+    padding-right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+ }
+ 
+ body {
+    background-image: url(https://media.discordapp.net/attachments/658084234954539028/1083133985619705886/d9c03be2d06281e1fff0199ec2f61cae035bb96ecd3920d18bab8ae38b189870.png?width=925&height=521);
+    background-color: #cccccc;
+
+   }
+
+   h1 {
+    color: white;
+    text-shadow:
+     -1px -1px 0 #000,
+      1px -1px 0 #000,
+      -1px 1px 0 #000,
+       1px 1px 0 #000;
+  }
+
+  h3 {
+    color: white;
+    text-shadow:
+     -1px -1px 0 #000,
+      1px -1px 0 #000,
+      -1px 1px 0 #000,
+       1px 1px 0 #000;
+  }
+
+  p {
+    color: white;
+    text-shadow:
+     -1px -1px 0 #000,
+      1px -1px 0 #000,
+      -1px 1px 0 #000,
+       1px 1px 0 #000;
+  }
