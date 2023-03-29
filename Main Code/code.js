@@ -16,7 +16,7 @@ let height = canvasGFX.height;
 let gravity = 0.5;
 let gravitySpeed = 0;
 
-let gravity2 = 0.1;
+let gravity2 = 0.5;
 let gravitySpeed2 = 0;
 
 // Jumping
@@ -66,6 +66,11 @@ let Player1Down   = false;
 let Player1Left   = false;
 let Player1Right  = false;
 
+let Player2Up     = false;
+let Player2Down   = false;
+let Player2Left   = false;
+let Player2Right  = false;
+
 let Restart = false;
 
 
@@ -76,6 +81,11 @@ document.onkeydown = function( event ) {
     else if (event.key == "s")            Player1Down   = true;  
     if      (event.key == "a")            Player1Left   = true;  
     else if (event.key == "d")            Player1Right  = true; 
+
+    if      (event.key == "i")            Player2Up     = true;  
+    else if (event.key == "k")            Player2Down   = true;  
+    if      (event.key == "j")            Player2Left   = true;  
+    else if (event.key == "l")            Player2Right  = true; 
 
     if      (event.key == "e" && player1attack == false)    player1attack = true; 
     if      (event.key == "q" && player1kick == false)      player1kick   = true; 
@@ -91,6 +101,11 @@ document.onkeyup = function( event ) {
     else if (event.key == "s")            Player1Down   = false;  
     if      (event.key == "a")            Player1Left   = false;  
     else if (event.key == "d")            Player1Right  = false;  
+
+    if      (event.key == "i")            Player2Up     = false;  
+    else if (event.key == "k")            Player2Down   = false;  
+    if      (event.key == "j")            Player2Left   = false;  
+    else if (event.key == "l")            Player2Right  = false;  
     
 
 } 
@@ -101,7 +116,7 @@ document.onkeyup = function( event ) {
 let player1X                   = 200;
 let player1Y                   = 200;
 
-let player2X                   = 500;
+let player2X                   = 600;
 let player2Y                   = 100;
 
 // Player Movement
@@ -154,20 +169,32 @@ let player2Animation           = [
 ];
 let Player1AnimationFPS = 4;
 //player 1 sprites
-let spriteSheetURL = "";
-let spriteSheetRows = 4;
-let spriteSheetColumns1 = 4;
-let spriteWidth;
-let spriteHeight;
-let imgSpriteSheet = new Image();
-imgSpriteSheet.src = spriteSheetURL;
-imgSpriteSheet.onload = initialize;
+let sprite1SheetURL = "sprite.png";
+let sprite1SheetRows = 6;
+let sprite1SheetColumns = 6;
+let sprite1Width;
+let sprite1Height;
+let imgSprite1Sheet = new Image();
+imgSprite1Sheet.src = sprite1SheetURL;
+imgSprite1Sheet.onload = initialize;
+
+let sprite2SheetURL = "";
+let sprite2SheetRows = 4;
+let sprite2SheetColumns = 4;
+let sprite2Width;
+let sprite2Height;
+let imgSprite2Sheet = new Image();
+imgSprite2Sheet.src = sprite2SheetURL;
+imgSprite2Sheet.onload = initialize;
 
 
 function initialize(){
-    spriteWidth = imgSpriteSheet.width/spriteSheetColumns1;
-    spriteHeight = imgSpriteSheet.height/spriteSheetRows;
-    game();
+    sprite1Width = imgSprite1Sheet.width/sprite1SheetColumns;
+    sprite1Height = imgSprite1Sheet.height/sprite1SheetRows;
+
+    sprite2Width = imgSprite2Sheet.width/sprite2SheetColumns;
+    sprite2Height = imgSprite2Sheet.height/sprite2SheetRows;
+    
 }
 
 function delay(time) {
@@ -195,16 +222,19 @@ function Gameloop(){
     lastTime = timeNow;
 
        //control
-       dx = 0;
-       dy = 1;
-       if (Player1Left  )   dx = -4;
-       if (Player1Right )   dx =  4;
-       if (Player1Up    )   dy = -8;
-       if (Player1Down  )   dy =  4-dy;
-   
-       //movement
-       player1X += dx;
-       player1Y += dy; 
+       d1x = 0;
+       d1y = 1;
+       if (Player1Left  )   d1x = -4;
+       if (Player1Right )   d1x =  4;
+       if (Player1Up    )   d1y = -8;
+       if (Player1Down  )   d1y =  4-d1y;
+
+       d2x = 0;
+       d2y = 1;
+       if (Player2Left  )   d2x = -4;
+       if (Player2Right )   d2x =  4;
+       if (Player2Up    )   d2y = -8;
+       if (Player2Down  )   d2y =  4-d2y;
 
        
      
@@ -221,19 +251,7 @@ function Gameloop(){
     let pos2 = [player2X, player2Y, player2Height, player2Width];
     // Ctx for Player 2
     ctx.fillRect(player2X, player2Y, player2Height, player2Width);
-  
-    
 
-// Movement and Movement Speed
-    player1X += d1x;
-    player1Y += d1y;
-    d1x += moveSpeedp1X;
-    d1y += moveSpeedp1Y;
-
-    player2X += d2x;
-    player2Y += d2y;
-    d2x += moveSpeedp2X;
-    d2y += moveSpeedp2Y;
 
 
 // Gravity
@@ -452,21 +470,21 @@ if(player1X + player1Width + 5 >= player2X  &&
     
     let s = player1AnimationState;  // Animation Array
     let i = player1AnimationIndex;  // animation 
-    let spriteCutStartX = player1Animation[s][i]%spriteSheetColumns1 * spriteWidth;
-    let spriteCutStartY = Math.floor(player1Animation[s][i]/spriteSheetColumns1) * spriteHeight;
+    let spriteCutStartX = player1Animation[s][i]%sprite1SheetColumns * sprite1Width;
+    let spriteCutStartY = Math.floor(player1Animation[s][i]/sprite1SheetColumns) * sprite1Height;
 
     //begin
     if (Player1Down == true) {
-        player1AnimationState = 4;
+        player1AnimationState = 6;
     }
     else if (Player1Up == true) {
-        player1AnimationState = 3;
+        player1AnimationState = 5;
     }
     else if (Player1Left == true) {
-        player1AnimationState = 1;
+        player1AnimationState = 2;
     }
     else if (Player1Right == true) {
-        player1AnimationState = 2;
+        player1AnimationState = 1;
     }
     else player1AnimationState = 0;
     
@@ -506,6 +524,19 @@ ctx.fillStyle = "rgb(255, 0 , 0 )";
 
 ctx.fillRect(550, 30, health2*4, 15)
 ctx.fillStyle = "rgb(255, 255 , 0 )";
+
+//draw
+
+ctx.drawImage(imgSprite1Sheet,                   
+    spriteCutStartX, spriteCutStartY,           
+    sprite1Width, sprite1Height,                 
+    player1X - player1Width/2, player1Y - player1Height/2,    
+    player1Width, player1Height);                 
+
+   
+
+
+
 
 // If Health Reaches 0, the game restarts 
 
